@@ -38,6 +38,9 @@ const IdInforPage = () => {
   return (
     <div className="container">
       <div>
+        <p className="right-align">
+          <a href="/">SignOut</a>
+        </p>
         <form
           onSubmit={handleSubmit((data) => onSubmit(data))}
           className="white"
