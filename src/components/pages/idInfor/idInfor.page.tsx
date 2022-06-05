@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const IdInforPage = () => {
@@ -14,7 +15,24 @@ const IdInforPage = () => {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log("data", data);
+    const idNumber = parseInt(data.idnumber);
+
+    axios
+      .post(`http://localhost:3001/user/idinfor`, {
+        idNumber,
+      })
+      .then((res) => {
+        console.log(res);
+        console.log(res.data);
+
+        const data = res.data;
+
+        setGender(data.data.gender);
+        setDob(data.data.dob);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -57,12 +75,26 @@ const IdInforPage = () => {
       </div>
       <div style={{ textAlign: "left" }}>
         <Box sx={{ width: "100%", maxWidth: 500 }}>
-          <Typography variant="h4" component="div">
-            Gender: {gender}
+          <Typography variant="h5" component="div">
+            Gender
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="div"
+            className="white-text pink center-align"
+          >
+            {gender}
           </Typography>
 
-          <Typography variant="h4" component="div">
-            DOB: {dob}
+          <Typography variant="h5" component="div">
+            DOB
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            component="div"
+            className="white-text pink center-align"
+          >
+            {dob}
           </Typography>
         </Box>
       </div>
